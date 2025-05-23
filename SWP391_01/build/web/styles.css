@@ -1,0 +1,39 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+section#trang-chu {
+    background-color: #D70018;
+}
+
+section#tinh-nang h2, section#gia h2, section#lien-he h2 {
+    color: #D70018;
+}
+
+section#tinh-nang .text-red-600, section#gia .text-red-600, section#lien-he .text-red-600 {
+    color: #D70018;
+}
+
+#storeNameModal form, #loginStep1 form, #loginStep2 form {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#storeNameModal input, #loginStep1 input, #loginStep2 input {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#storeNameModal button, #loginStep1 button, #loginStep2 button {
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#storeNameModal .bg-blue-600, #loginStep1 .bg-blue-600, #loginStep2 .bg-blue-600 {
+    background-color: #00A3E0; /* Màu xanh dương KiotViet */
+}
+
+#storeNameModal .bg-blue-600:hover, #loginStep1 .bg-blue-600:hover, #loginStep2 .bg-blue-600:hover {
+    background-color: #0088C2;
+}

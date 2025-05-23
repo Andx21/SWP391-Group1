@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Quản Lý Bán Hàng SalePro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Thanh điều hướng -->
+    <nav class="bg-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-red-600">SWP391-GRUOP1</a>
+            <ul class="flex space-x-6">
+                <li><a href="#trang-chu" class="text-gray-600 hover:text-red-600">Trang chủ</a></li>
+                <li><a href="#tinh-nang" class="text-gray-600 hover:text-red-600">Tính năng</a></li>
+                <li><a href="#gia" class="text-gray-600 hover:text-red-600">Bảng giá</a></li>
+                <li><a href="#lien-he" class="text-gray-600 hover:text-red-600">Liên hệ</a></li>
+                <li><button id="loginBtn" class="text-gray-600 hover:text-red-600">Đăng nhập</button></li>
+                <li><a href="login.jsp?mode=signup" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Đăng ký</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Modal Nhập Tên cửa hàng -->
+    <div id="storeNameModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div class="flex justify-center mb-4">
+                <img src="https://via.placeholder.com/40" alt="Logo" class="w-10 h-10">
+                <h2 class="text-2xl font-bold ml-2 text-blue-600">SWP391-GRUOP1</h2>
+            </div>
+            <form action="/login-step1" method="POST" class="space-y-4">
+                <input type="text" name="storeName" placeholder="Tên cửa hàng" class="w-full p-3 border rounded-lg" required>
+                <button type="submit" class="bg-blue-600 text-white w-full py-3 rounded-lg font-semibold hover:bg-blue-700">Tiếp tục</button>
+                <button type="button" id="closeStoreNameModal" class="text-gray-600 hover:text-red-600 w-full mt-2">Đóng</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Phần Trang chủ -->
+    <section id="trang-chu" class="bg-red-600 text-white py-20">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-4">Phần Mềm Quản Lý Bán Hàng</h1>
+            <p class="text-lg mb-6">Giải pháp quản lý bán hàng toàn diện, đơn giản, dễ dùng cho mọi cửa hàng.</p>
+            <a href="#lien-he" class="bg-white text-red-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200">Dùng thử miễn phí</a>
+        </div>
+    </section>
+
+    <!-- Phần Tính năng -->
+    <section id="tinh-nang" class="py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6 text-red-600">Tính năng nổi bật</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Quản lý hàng hóa</h3>
+                    <p class="text-gray-600">Theo dõi tồn kho, nhập/xuất hàng, quản lý sản phẩm theo mã.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Báo cáo doanh thu</h3>
+                    <p class="text-gray-600">Thống kê doanh thu, lợi nhuận theo ngày, tuần, tháng.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Tích hợp TMĐT</h3>
+                    <p class="text-gray-600">Đồng bộ đơn hàng từ Shopee, Lazada, Tiki.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phần Bảng giá -->
+    <section id="gia" class="bg-gray-200 py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6 text-red-600">Bảng giá</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Gói cơ bản</h3>
+                    <p class="text-gray-600 mb-4">Phù hợp cho cửa hàng nhỏ, bán lẻ.</p>
+                    <p class="text-2xl font-bold text-red-600">180.000đ/tháng</p>
+                    <a href="#lien-he" class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700">Đăng ký ngay</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Gói chuyên nghiệp</h3>
+                    <p class="text-gray-600 mb-4">Dành cho doanh nghiệp lớn, chuỗi cửa hàng.</p>
+                    <p class="text-2xl font-bold text-red-600">250.000đ/tháng</p>
+                    <a href="#lien-he" class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700">Đăng ký ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phần Liên hệ -->
+    <section id="lien-he" class="py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6 text-red-600">Liên hệ với chúng tôi</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-6">Bạn có câu hỏi? Hãy liên hệ để được tư vấn!</p>
+            <div class="max-w-md mx-auto">
+                <form action="/contact" method="POST">
+                    <input type="text" name="name" placeholder="Họ và tên" class="w-full p-3 mb-4 border rounded-lg" required>
+                    <input type="email" name="email" placeholder="Email" class="w-full p-3 mb-4 border rounded-lg" required>
+                    <textarea name="message" placeholder="Tin nhắn của bạn" class="w-full p-3 mb-4 border rounded-lg" rows="5" required></textarea>
+                    <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700">Gửi tin nhắn</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chân trang -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2025 SalePro. Bản quyền thuộc về chúng tôi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cuộn mượt mà cho các liên kết điều hướng
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Xử lý modal nhập Tên cửa hàng
+        const loginBtn = document.getElementById('loginBtn');
+        const storeNameModal = document.getElementById('storeNameModal');
+        const closeStoreNameModal = document.getElementById('closeStoreNameModal');
+
+        loginBtn.addEventListener('click', () => {
+            storeNameModal.classList.remove('hidden');
+        });
+
+        closeStoreNameModal.addEventListener('click', () => {
+            storeNameModal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
