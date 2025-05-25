@@ -4,8 +4,24 @@
         <servlet-name>Product</servlet-name>
         <servlet-class>controller.Product</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>searchProduct</servlet-name>
+        <servlet-class>controller.searchProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editProduct</servlet-name>
+        <servlet-class>controller.editProduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchProduct</servlet-name>
+        <url-pattern>/searchProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editProduct</servlet-name>
+        <url-pattern>/editProduct</url-pattern>
     </servlet-mapping>
 </web-app>

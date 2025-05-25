@@ -5,21 +5,18 @@
 
 package controller;
 
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 /**
  *
- * @author Hung
+ * @author chang
  */
-public class Product extends HttpServlet {
+public class editProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +33,10 @@ public class Product extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Product</title>");  
+            out.println("<title>Servlet editProduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Product at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet editProduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,13 +53,7 @@ public class Product extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        ProductDAO pDao = new ProductDAO();
-        ArrayList productList = pDao.getAllProducts("SalesManagement");
-        request.setAttribute("productList", productList);
-        request.getRequestDispatcher("product.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 

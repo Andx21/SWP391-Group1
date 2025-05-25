@@ -14,35 +14,72 @@
         <link rel="stylesheet" href="css/product.css">
     </head>
     <body>
-        <c:if test="${requestScope.productList==null}">
-            <%
-                response.sendRedirect("product");
-            %>
-        </c:if>
+        <div>
+            <form action="searchProduct" method="post">
+                <input type="text" name="search" value="${requestScope.info}"/>
+                <input type="submit" value="search"/>
+            </form> 
+        </div>
         <div class="content">
             <center>
-                <c:forEach var="product" items="${requestScope.productList}">
-                    <div class="product-container">
-                        <div class="product-image">
-                            <img src="${product.image}" alt="Product Image"/>
-                        </div>
-                        <div class="product-info">
-                            <table>
-                                <tr>
-                                    <td><strong>Name:</strong></td>
-                                    <td>${product.productName}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Price:</strong></td>
-                                    <td>${product.price}</td>
-                                </tr>
-                            </table>
-                            <form action="checkAvailableCar" method="post">
-                                <button type="submit" class="buy-button">Buy</button>
-                            </form>
-                        </div>
-                    </div>
-                </c:forEach>
+                <c:choose>
+                    <c:when test="${requestScope.searchedProductList!=null}">
+                        <c:forEach var="product" items="${requestScope.searchedProductList}">
+                            <div class="product-container">
+                                <div class="product-image">
+                                    <img src="${product.image}" alt="Product Image"/>
+                                </div>
+                                <div class="product-info">
+                                    <table>
+                                        <tr>
+                                            <td><strong>Name:</strong></td>
+                                            <td>${product.productName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Price:</strong></td>
+                                            <td>${product.price}</td>
+                                        </tr>
+                                    </table>
+                                    <form action="checkAvailableCar" method="post">
+                                        <button type="submit" class="buy-button">Buy</button>
+                                    </form>
+                                        <form action="editProduct.jsp" method="post">
+                                            <button type="submit" class="buy-button">Edit</button>
+                                        </form>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${requestScope.productList==null}">
+                            <%
+                                response.sendRedirect("product");
+                            %>
+                        </c:if>
+                        <c:forEach var="product" items="${requestScope.productList}">
+                            <div class="product-container">
+                                <div class="product-image">
+                                    <img src="${product.image}" alt="Product Image"/>
+                                </div>
+                                <div class="product-info">
+                                    <table>
+                                        <tr>
+                                            <td><strong>Name:</strong></td>
+                                            <td>${product.productName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Price:</strong></td>
+                                            <td>${product.price}</td>
+                                        </tr>
+                                    </table>
+                                    <form action="checkAvailableCar" method="post">
+                                        <button type="submit" class="buy-button">Buy</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </center>
         </div>
     </body>

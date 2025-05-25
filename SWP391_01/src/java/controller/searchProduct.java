@@ -14,12 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import model.Product;
 
 /**
  *
- * @author Hung
+ * @author chang
  */
-public class Product extends HttpServlet {
+public class searchProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +37,10 @@ public class Product extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Product</title>");  
+            out.println("<title>Servlet searchProduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Product at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet searchProduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,13 +57,7 @@ public class Product extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        ProductDAO pDao = new ProductDAO();
-        ArrayList productList = pDao.getAllProducts("SalesManagement");
-        request.setAttribute("productList", productList);
-        request.getRequestDispatcher("product.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -75,7 +70,23 @@ public class Product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        HttpSession session = request.getSession();
+        String DBname = (String) session.getAttribute("storeName");
+        String info = request.getParameter("search");
+        ProductDAO pDAO = new ProductDAO();
+        ArrayList<Product> productList = pDAO.getAllProducts("SalesManagement");
+        ArrayList<Product> searchedProductList = new ArrayList<>();
+        for(Product p : productList){
+            if(p.getProductName().toLowerCase().contains(info.toLowerCase()))
+                searchedProductList.add(p);
+        }
+        if(searchedProductList.size()>0)System.out.println("have list");
+        else System.out.println("errror");
+        System.out.println(info);
+        request.setAttribute("info", info);
+        request.setAttribute("searchedProductList", searchedProductList);
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 
     /** 
