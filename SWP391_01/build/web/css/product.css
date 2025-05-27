@@ -7,51 +7,127 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Hung
 */
 
-.product-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fbe9e7;
+    margin: 0;
+    padding: 0;
 }
-.product-image, .product-info {
-    width: 50%;
-    padding: 10px;
-    box-sizing: border-box;
+
+form {
+    margin: 20px;
+    display: inline-block;
 }
-.product-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-}
-.product-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-.product-info table {
-    width: 100%;
-}
-.product-info td {
-    padding: 10px;
-}
-.buy-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #007BFF;
+
+button, input[type="submit"] {
+    background-color: #d32f2f;
     color: white;
     border: none;
+    padding: 10px 20px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-weight: bold;
     border-radius: 5px;
-    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #b71c1c;
+}
+
+.content {
+    padding: 20px;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #d32f2f;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 20px;
+    border: 2px solid #d32f2f;
+}
+
+.product-info table {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.product-info td {
+    padding: 4px 8px;
+}
+
+h3, h2 {
+    color: #d32f2f;
+    margin: 0;
+    padding: 10px 0;
+}
+
+input[type="text"] {
+    padding: 8px;
+    border: 2px solid #d32f2f;
+    border-radius: 5px;
+    outline: none;
+    width: 200px;
+}
+
+center {
+    display: block;
+    text-align: center;
+}
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fbe9e7; /* đỏ nhạt */
+}
+
+.top-bar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-bar input[type="text"] {
+    padding: 8px;
+    border: 2px solid #d32f2f;
+    border-radius: 5px;
+    outline: none;
+}
+
+.top-bar input[type="submit"],
+.top-bar button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
-.buy-button:hover {
-    background-color: #0056b3;
+
+.top-bar input[type="submit"]:hover,
+.top-bar button:hover {
+    background-color: #b71c1c;
+}
+.divider {
+    border: none;
+    height: 2px;
+    background-color: #d32f2f;
+    width: 90%; /* Giới hạn chiều dài của dòng kẻ */
+    margin: 20px auto;
 }

@@ -11,15 +11,16 @@ import java.math.BigDecimal;
  * @author Hung
  */
 public class Product {
-    private int productId;
+    private int productId, quantity;
     private BigDecimal price;
     private String productName, unit, image;
 
     public Product() {
     }
 
-    public Product(int productId, BigDecimal price, String productName, String unit, String image) {
+    public Product(int productId, int quantity, BigDecimal price, String productName, String unit, String image) {
         this.productId = productId;
+        this.quantity = quantity;
         this.price = price;
         this.productName = productName;
         this.unit = unit;
@@ -64,6 +65,14 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
 }

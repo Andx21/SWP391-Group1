@@ -5,16 +5,20 @@
 
 package controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  *
- * @author chang
+ * @author Hung
  */
 public class editProduct extends HttpServlet {
    
@@ -53,7 +57,20 @@ public class editProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String price = request.getParameter("price");
+        String image = request.getParameter("image");
+        String unit = request.getParameter("unit");
+        String quantity = request.getParameter("quantity");
+        request.setAttribute("quantity", quantity);
+        request.setAttribute("id", id);
+        request.setAttribute("name", name);
+        request.setAttribute("price", price);
+        request.setAttribute("image", image);
+        request.setAttribute("unit", unit);
+        request.getRequestDispatcher("editProduct.jsp").forward(request, response);
     } 
 
     /** 
@@ -66,7 +83,20 @@ public class editProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        HttpSession session = request.getSession();
+        String DBname = (String) session.getAttribute("storeName");
+        String warehouseId = (String) session.getAttribute("warehouseId");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        String image = request.getParameter("image");
+        String unit = request.getParameter("unit");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        ProductDAO pDAO = new ProductDAO();
+        pDAO.updateProduct(id, name, price, image, "SalesManagement", unit);
+        pDAO.updateQuantity(quantity, "SalesManagement", 1, id);
+        response.sendRedirect("product");
     }
 
     /** 

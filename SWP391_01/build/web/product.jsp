@@ -14,16 +14,21 @@
         <link rel="stylesheet" href="css/product.css">
     </head>
     <body>
-        <div>
-            <form action="searchProduct" method="post">
+        <div class="top-bar">
+            <form action="addProduct">
+                <button type="submit">ADD</button>
+            </form>
+
+            <form action="searchProduct" method="post" class="search-form">
                 <input type="text" name="search" value="${requestScope.info}"/>
                 <input type="submit" value="search"/>
-            </form> 
+            </form>
         </div>
+
         <div class="content">
             <center>
                 <c:choose>
-                    <c:when test="${requestScope.searchedProductList!=null}">
+                    <c:when test="${requestScope.searchedProductList.size() > 0}">
                         <c:forEach var="product" items="${requestScope.searchedProductList}">
                             <div class="product-container">
                                 <div class="product-image">
@@ -39,22 +44,33 @@
                                             <td><strong>Price:</strong></td>
                                             <td>${product.price}</td>
                                         </tr>
+                                        <tr>
+                                            <td><strong>Quantity:</strong></td>
+                                            <td>${product.quantity}</td>
+                                        </tr>
                                     </table>
                                     <form action="checkAvailableCar" method="post">
                                         <button type="submit" class="buy-button">Buy</button>
                                     </form>
-                                        <form action="editProduct.jsp" method="post">
-                                            <button type="submit" class="buy-button">Edit</button>
-                                        </form>
+                                    <form action="editProduct" method="get">
+                                        <input type="hidden" name="id" value="${product.productId}"/>
+                                        <input type="hidden" name="name" value="${product.productName}"/>
+                                        <input type="hidden" name="price" value="${product.price}"/>
+                                        <input type="hidden" name="image" value="${product.image}"/>
+                                        <input type="hidden" name="unit" value="${product.unit}"/>
+                                        <input type="hidden" name="quantity" value="${product.quantity}"/>
+                                        <button type="submit" class="buy-button">Edit</button>
+                                    </form>
                                 </div>
                             </div>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${requestScope.productList==null}">
-                            <%
-                                response.sendRedirect("product");
-                            %>
+                        <c:if test="${requestScope.status == 'empty'}">
+                            <h3>Not found!</h3>
+                            <hr class="divider"/>
+                            <h2>Another products</h2>
+
                         </c:if>
                         <c:forEach var="product" items="${requestScope.productList}">
                             <div class="product-container">
@@ -71,9 +87,22 @@
                                             <td><strong>Price:</strong></td>
                                             <td>${product.price}</td>
                                         </tr>
+                                        <tr>
+                                            <td><strong>Quantity:</strong></td>
+                                            <td>${product.quantity}</td>
+                                        </tr>
                                     </table>
-                                    <form action="checkAvailableCar" method="post">
+                                    <form action="" method="post">
                                         <button type="submit" class="buy-button">Buy</button>
+                                    </form>
+                                    <form action="editProduct" method="get">
+                                        <input type="hidden" name="id" value="${product.productId}"/>
+                                        <input type="hidden" name="name" value="${product.productName}"/>
+                                        <input type="hidden" name="price" value="${product.price}"/>
+                                        <input type="hidden" name="image" value="${product.image}"/>
+                                        <input type="hidden" name="unit" value="${product.unit}"/>
+                                        <input type="hidden" name="quantity" value="${product.quantity}"/>
+                                        <button type="submit" class="buy-button">Edit</button>
                                     </form>
                                 </div>
                             </div>

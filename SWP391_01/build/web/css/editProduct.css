@@ -1,0 +1,67 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26 thg 5, 2025, 22:27:36
+    Author     : Hung
+*/
+
+body {
+    background-color: #fce4ec; /* đỏ nhạt hồng */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.edit-form {
+    background-color: #fff;
+    border: 2px solid #d32f2f;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(211, 47, 47, 0.2);
+    width: 350px;
+}
+
+.edit-form label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #c62828;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: 2px solid #ef5350;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.edit-form input[type="text"]:focus,
+.edit-form input[type="number"]:focus {
+    border-color: #c62828;
+    box-shadow: 0 0 6px rgba(198, 40, 40, 0.5);
+}
+
+.submit-btn {
+    background-color: #d32f2f;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #b71c1c;
+}

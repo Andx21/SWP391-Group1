@@ -4,11 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/controller/Product.java</file>
+            <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/controller/searchProduct.java</file>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/dal/ProductDAO.java</file>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/web/product.jsp</file>
+            <file>file:/E:/SWP/SWP391-Group1/SWP391_01/web/editProduct.jsp</file>
+            <file>file:/E:/SWP/SWP391-Group1/SWP391_01/web/css/editProduct.css</file>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/dal/DBContext.java</file>
+            <file>file:/E:/SWP/SWP391-Group1/SWP391_01/web/addProduct.jsp</file>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/web/css/product.css</file>
             <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/controller/AuthServlet.java</file>
+            <file>file:/E:/SWP/SWP391-Group1/SWP391_01/src/java/controller/editProduct.java</file>
         </group>
     </open-files>
 </project-private>

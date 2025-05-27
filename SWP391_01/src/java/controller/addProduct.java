@@ -13,13 +13,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Hung
  */
-public class Product extends HttpServlet {
+public class addProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +36,10 @@ public class Product extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Product</title>");  
+            out.println("<title>Servlet addProduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Product at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet addProduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,13 +57,7 @@ public class Product extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        String warehouseId = (String) session.getAttribute("warehouseId");
-        ProductDAO pDao = new ProductDAO();
-        ArrayList productList = pDao.getAllProducts("SalesManagement", 1);
-        request.setAttribute("productList", productList);
-        request.getRequestDispatcher("product.jsp").forward(request, response);
+        response.sendRedirect("addProduct.jsp");
     } 
 
     /** 
@@ -76,7 +70,21 @@ public class Product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        HttpSession session = request.getSession();
+        String DBname = (String) session.getAttribute("storeName");
+        String warehouse = (String) session.getAttribute("warehouseId");
+//        int warehouseId = Integer.parseInt(warehouse);
+        String name = request.getParameter("name");
+        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        String image = request.getParameter("image");
+        String unit = request.getParameter("unit");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        ProductDAO pDAO = new ProductDAO();
+        int id = pDAO.addProduct(name, image, "SalesManagement", price, unit);
+        pDAO.addProductToInventory("SalesManagement", id, 1, quantity);
+        System.out.println(id+">");
+        response.sendRedirect("product");
     }
 
     /** 
