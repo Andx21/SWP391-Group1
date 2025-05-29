@@ -5,21 +5,18 @@
 
 package controller;
 
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
 
 /**
  *
  * @author Hung
  */
-public class addProduct extends HttpServlet {
+public class filterProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +33,10 @@ public class addProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addProduct</title>");  
+            out.println("<title>Servlet filterProduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addProduct at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet filterProduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,8 +53,7 @@ public class addProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        response.sendRedirect("addProduct.jsp");
+        processRequest(request, response);
     } 
 
     /** 
@@ -70,20 +66,7 @@ public class addProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        String warehouse = (String) session.getAttribute("warehouseId");
-        int warehouseId = Integer.parseInt(warehouse);
-        String name = request.getParameter("name");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        String image = request.getParameter("image");
-        String unit = request.getParameter("unit");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        ProductDAO pDAO = new ProductDAO();
-        int id = pDAO.addProduct(name, image, "SalesManagement", price, unit);
-        pDAO.addProductToInventory("SalesManagement", id, warehouseId, quantity);
-        response.sendRedirect("product");
+        processRequest(request, response);
     }
 
     /** 

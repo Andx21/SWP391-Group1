@@ -6,6 +6,7 @@
 package controller;
 
 import dal.ProductDAO;
+import dal.WarehouseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,11 +60,10 @@ public class Product extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String DBname = (String) session.getAttribute("storeName");
-        String warehouseId = (String) session.getAttribute("warehouseId");
-        ProductDAO pDao = new ProductDAO();
-        ArrayList productList = pDao.getAllProducts("SalesManagement", 1);
-        request.setAttribute("productList", productList);
-        request.getRequestDispatcher("product.jsp").forward(request, response);
+        WarehouseDAO wDAO = new WarehouseDAO();
+        ArrayList warehouseList = wDAO.getAllWarehouse("SalesManagement");
+        session.setAttribute("warehouseList", warehouseList);
+        response.sendRedirect("product.jsp");
     } 
 
     /** 
@@ -76,7 +76,22 @@ public class Product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        HttpSession session = request.getSession();
+        String DBname = (String) session.getAttribute("storeName");
+        String id = request.getParameter("warehouseId");
+        int warehouseId = Integer.parseInt(id);
+        ProductDAO pDAO = new ProductDAO();
+        ArrayList productList = pDAO.getAllProducts("SalesManagement", warehouseId);
+        WarehouseDAO wDAO = new WarehouseDAO();
+        ArrayList warehouseList = wDAO.getAllWarehouse("SalesManagement");
+        if (session.getAttribute("warehouseId") != null) {
+            session.removeAttribute("warehouseId");
+        }
+        session.setAttribute("warehouseList", warehouseList);
+        session.setAttribute("warehouseId", warehouseId);
+        request.setAttribute("productList", productList);
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 
     /** 

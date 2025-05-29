@@ -76,10 +76,10 @@ public class searchProduct extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String DBname = (String) session.getAttribute("storeName");
-        String warehouseId = (String) session.getAttribute("warehouseId");
+        int warehouseId = (int) session.getAttribute("warehouseId");
         String info = request.getParameter("search");
         ProductDAO pDAO = new ProductDAO();
-        ArrayList<Product> productList = pDAO.getAllProducts("SalesManagement", 1);
+        ArrayList<Product> productList = pDAO.getAllProducts("SalesManagement", warehouseId);
         ArrayList<Product> searchedProductList = new ArrayList<>();
         for (Product p : productList) {
             if (p.getProductName().toLowerCase().contains(info.toLowerCase())) {
@@ -91,7 +91,6 @@ public class searchProduct extends HttpServlet {
         }
         request.setAttribute("info", info);
         request.setAttribute("searchedProductList", searchedProductList);
-        request.setAttribute("productList", productList);
         request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 

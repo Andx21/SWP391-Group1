@@ -131,3 +131,43 @@ center {
     width: 90%; /* Giới hạn chiều dài của dòng kẻ */
     margin: 20px auto;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.inline-form {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: red;
+    font-family: Arial, sans-serif;
+}
+
+.inline-form h2 {
+    margin: 0;
+    font-size: 20px;
+    color: red;
+}
+
+.inline-form form select,
+.inline-form form input[type="submit"] {
+    padding: 5px 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    font-size: 14px;
+    color: red;
+    background-color: white;
+}
+
+.inline-form form input[type="submit"] {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.inline-form form input[type="submit"]:hover {
+    background-color: darkred;
+}

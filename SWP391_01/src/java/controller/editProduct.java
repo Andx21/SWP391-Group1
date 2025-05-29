@@ -14,7 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -86,7 +87,7 @@ public class editProduct extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String DBname = (String) session.getAttribute("storeName");
-        String warehouseId = (String) session.getAttribute("warehouseId");
+        int warehouseId = (int) session.getAttribute("warehouseId");
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         BigDecimal price = new BigDecimal(request.getParameter("price"));
@@ -95,8 +96,8 @@ public class editProduct extends HttpServlet {
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         ProductDAO pDAO = new ProductDAO();
         pDAO.updateProduct(id, name, price, image, "SalesManagement", unit);
-        pDAO.updateQuantity(quantity, "SalesManagement", 1, id);
-        response.sendRedirect("product");
+        pDAO.updateQuantity(quantity, "SalesManagement", warehouseId, id);;
+        request.getRequestDispatcher("product?warehouseId="+warehouseId).forward(request, response);
     }
 
     /** 

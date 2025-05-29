@@ -16,6 +16,10 @@
         <servlet-name>addProduct</servlet-name>
         <servlet-class>controller.addProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>filterProduct</servlet-name>
+        <servlet-class>controller.filterProduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/product</url-pattern>
@@ -31,5 +35,9 @@
     <servlet-mapping>
         <servlet-name>addProduct</servlet-name>
         <url-pattern>/addProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filterProduct</servlet-name>
+        <url-pattern>/filterProduct</url-pattern>
     </servlet-mapping>
 </web-app>
