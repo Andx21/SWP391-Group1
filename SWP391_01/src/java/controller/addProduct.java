@@ -6,6 +6,7 @@
 package controller;
 
 import dal.ProductDAO;
+import dal.SupplierDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import model.Supplier;
 
 /**
  *
@@ -57,7 +60,12 @@ public class addProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         //processRequest(request, response);
-        response.sendRedirect("addProduct.jsp");
+        SupplierDAO sDAO = new SupplierDAO();
+        HttpSession session = request.getSession();
+        String DBname = (String) session.getAttribute("storeName");
+        ArrayList<Supplier> listSupplier = sDAO.getAllSupplier("SalesManagement");
+        request.setAttribute("listSupplier", listSupplier);
+        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
     } 
 
     /** 

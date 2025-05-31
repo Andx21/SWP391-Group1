@@ -63,3 +63,21 @@ body {
 .submit-btn:hover {
     background-color: #b71c1c;
 }
+
+.add-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 2px solid #d32f2f;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #000;
+    font-size: 14px;
+}
+
+.add-form select:focus {
+    border-color: #b71c1c;
+    box-shadow: 0 0 5px rgba(211, 47, 47, 0.5);
+}
