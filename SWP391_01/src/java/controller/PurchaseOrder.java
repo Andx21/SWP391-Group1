@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.ProductDAO;
+import dal.SupplierDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,14 +12,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import model.Supplier;
+import model.PurchaseOrders;
+import dal.SupplierDAO;
+import dal.ProductDAO;
+import java.util.Map;
 import model.Product;
 
 /**
  *
  * @author Hung
  */
-public class searchProduct extends HttpServlet {
+public class PurchaseOrder extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +46,10 @@ public class searchProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet searchProduct</title>");
+            out.println("<title>Servlet PurchaseOrder</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet searchProduct at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PurchaseOrder at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,17 +70,21 @@ public class searchProduct extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String DBname = (String) session.getAttribute("storeName");
-        String info = request.getParameter("search");
-        ProductDAO pDAO = new ProductDAO();
-        ArrayList<Product> productList = pDAO.getAllProducts("SalesManagement");
-        ArrayList<Product> searchedProductList = new ArrayList<>();
-        for (Product p : productList) {
-            if (p.getProductName().toLowerCase().contains(info.toLowerCase())) {
-                searchedProductList.add(p);
-            }
-        }
-        request.setAttribute("info", info);
-        request.setAttribute("searchedProductList", searchedProductList);
+        String productId = (String) request.getParameter("id");
+        String name = (String) request.getParameter("name");
+        String price = (String) request.getParameter("price");
+        String unit = (String) request.getParameter("unit");
+        String image = (String) request.getParameter("image");
+        SupplierDAO sDAO = new SupplierDAO();
+        ArrayList<Supplier> listSupplier = sDAO.getAllSupplier("SalesManagement");
+
+        request.setAttribute("check", "not empty");
+        request.setAttribute("listSupplier", listSupplier);
+        request.setAttribute("id", productId);
+        request.setAttribute("name", name);
+        request.setAttribute("price", price);
+        request.setAttribute("unit", unit);
+        request.setAttribute("image", image);
         request.getRequestDispatcher("purchaseOrder.jsp").forward(request, response);
     }
 
@@ -88,25 +100,7 @@ public class searchProduct extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        int warehouseId = (int) session.getAttribute("warehouseId");
-        String info = request.getParameter("search");
-        ProductDAO pDAO = new ProductDAO();
-        ArrayList<Product> productList = pDAO.getAllProductsOfOneWarehouse("SalesManagement", warehouseId);
-        ArrayList<Product> searchedProductList = new ArrayList<>();
-        for (Product p : productList) {
-            if (p.getProductName().toLowerCase().contains(info.toLowerCase())) {
-                searchedProductList.add(p);
-            }
-        }
-        if(searchedProductList.isEmpty()){
-            request.setAttribute("status", "empty");
-        }
-        request.setAttribute("productList", productList);
-        request.setAttribute("info", info);
-        request.setAttribute("searchedProductList", searchedProductList);
-        request.getRequestDispatcher("product.jsp").forward(request, response);
+        
     }
 
     /**

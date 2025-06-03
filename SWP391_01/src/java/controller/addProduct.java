@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import model.Supplier;
+import model.Product;
 
 /**
  *
@@ -60,12 +61,7 @@ public class addProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         //processRequest(request, response);
-        SupplierDAO sDAO = new SupplierDAO();
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        ArrayList<Supplier> listSupplier = sDAO.getAllSupplier("SalesManagement");
-        request.setAttribute("listSupplier", listSupplier);
-        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+        response.sendRedirect("addProduct.jsp");
     } 
 
     /** 
@@ -81,16 +77,28 @@ public class addProduct extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String DBname = (String) session.getAttribute("storeName");
-        String warehouse = (String) session.getAttribute("warehouseId");
-        int warehouseId = Integer.parseInt(warehouse);
         String name = request.getParameter("name");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        ProductDAO pDAO = new ProductDAO();
+        ArrayList<Product> list = pDAO.getAllProducts("SalesManagement");
+        for(Product p : list){
+            if(p.getProductName().toLowerCase().equals(name.toLowerCase())){
+                request.setAttribute("error", "Product existed!");
+                request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+                break;
+            }
+        }
+        BigDecimal price = BigDecimal.ZERO;
+        try{
+            price = new BigDecimal(request.getParameter("price"));
+        }
+        catch(NumberFormatException e){
+            request.setAttribute("error", "Must be number!");
+            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+        }
+        
         String image = request.getParameter("image");
         String unit = request.getParameter("unit");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        ProductDAO pDAO = new ProductDAO();
-        int id = pDAO.addProduct(name, image, "SalesManagement", price, unit);
-        pDAO.addProductToInventory("SalesManagement", id, warehouseId, quantity);
+        pDAO.addProduct(name, image, "SalesManagement", price, unit);
         response.sendRedirect("product");
     }
 

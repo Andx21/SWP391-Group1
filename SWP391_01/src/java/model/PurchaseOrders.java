@@ -11,21 +11,20 @@ import java.time.LocalDate;
  *
  * @author Hung
  */
-public class PurchaseOrder {
+public class PurchaseOrders {
     private int purchaseId, warehouseId, supplierId, productId, quantity;
-    private BigDecimal totalAmount, purchasePrice, sellingPrice;
+    private BigDecimal purchasePrice, sellingPrice;
     private LocalDate date;
 
-    public PurchaseOrder() {
+    public PurchaseOrders() {
     }
 
-    public PurchaseOrder(int purchaseId, int warehouseId, int supplierId, int productId, int quantity, BigDecimal totalAmount, BigDecimal purchasePrice, BigDecimal sellingPrice, LocalDate date) {
+    public PurchaseOrders(int purchaseId, int warehouseId, int supplierId, int productId, int quantity, BigDecimal purchasePrice, BigDecimal sellingPrice, LocalDate date) {
         this.purchaseId = purchaseId;
         this.warehouseId = warehouseId;
         this.supplierId = supplierId;
         this.productId = productId;
         this.quantity = quantity;
-        this.totalAmount = totalAmount;
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
         this.date = date;
@@ -69,14 +68,6 @@ public class PurchaseOrder {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
     }
 
     public BigDecimal getPurchasePrice() {

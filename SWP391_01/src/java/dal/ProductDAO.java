@@ -20,7 +20,7 @@ public class ProductDAO extends DBContext {
 
     Connection connection = null;
 
-    public ArrayList<Product> getAllProducts(String dbName, int warehouseId) {
+    public ArrayList<Product> getAllProductsOfOneWarehouse(String dbName, int warehouseId) {
 
         ArrayList<Product> list = new ArrayList<>();
         try {
@@ -39,6 +39,31 @@ public class ProductDAO extends DBContext {
                     p.setUnit(rs.getString("Unit"));
                     p.setImage(rs.getString("Image"));
                     p.setQuantity(rs.getInt("Quantity"));
+                    list.add(p);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public ArrayList<Product> getAllProducts(String dbName) {
+
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            connection = new DBContext().getConnection(dbName);
+            String sql = "select ProductName, ProductID, ProductName, Price, Unit, Image\n"
+                    + "from Product";
+            Statement st = connection.createStatement();
+            try (ResultSet rs = st.executeQuery(sql)) {
+                while (rs.next()) {
+                    Product p = new Product();
+                    p.setProductId(rs.getInt("ProductID"));
+                    p.setProductName(rs.getString("ProductName"));
+                    p.setPrice(rs.getBigDecimal("Price"));
+                    p.setUnit(rs.getString("Unit"));
+                    p.setImage(rs.getString("Image"));
                     list.add(p);
                 }
             }
@@ -79,28 +104,19 @@ public class ProductDAO extends DBContext {
         }
     }
 
-    public int addProduct(String name, String image, String dbName, BigDecimal price, String unit) {
-        int productId = -1;
+    public void addProduct(String name, String image, String dbName, BigDecimal price, String unit) {
         try {
             String sql = "INSERT INTO Product (ProductName, Price, Unit, [Image]) VALUES (?, ?, ?, ?)";
             connection = new DBContext().getConnection(dbName);
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setBigDecimal(2, price);
             ps.setString(3, unit);
             ps.setString(4, image);
             ps.executeUpdate();
-
-            try(ResultSet rs = ps.getGeneratedKeys()){
-                if(rs.next()){
-                    productId = rs.getInt(1);
-                }
-            }
-          
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return productId;
     }
 
     public void addProductToInventory(String dbName, int id, int warehouseId, int quantity) {
