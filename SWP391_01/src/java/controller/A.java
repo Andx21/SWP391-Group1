@@ -5,25 +5,22 @@
 
 package controller;
 
-import dal.ProductDAO;
-import dal.SupplierDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import model.Supplier;
-import model.Product;
+import dal.DBsuperAdminDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import dal.AccountDAO;
 
 /**
  *
  * @author Hung
  */
-public class addProduct extends HttpServlet {
+public class A extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +37,10 @@ public class addProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addProduct</title>");  
+            out.println("<title>Servlet A</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addProduct at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet A at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,8 +57,24 @@ public class addProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        response.sendRedirect("addProduct.jsp");
+        try {
+            //processRequest(request, response);
+            String name = request.getParameter("name");
+            String pass = request.getParameter("pass");
+            String email = request.getParameter("email");
+            String store = request.getParameter("store");
+            String db = request.getParameter("db");
+            
+            DBsuperAdminDAO sDAO = new DBsuperAdminDAO();
+            int id = sDAO.addAccount("SuperAdmin", name, email, pass, "shopOwner", db);
+            sDAO.addStore(store, "SuperAdmin", id);
+            sDAO.createNewShopDatabase(db);
+            AccountDAO aDAO = new AccountDAO();
+            aDAO.addUser(name, db, pass);
+            response.sendRedirect("index.html");
+        } catch (Exception ex) {
+            Logger.getLogger(A.class.getName()).log(Level.SEVERE, null, ex);
+        }
     } 
 
     /** 
@@ -74,32 +87,7 @@ public class addProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        String DBname = (String) session.getAttribute("storeName");
-        String name = request.getParameter("name");
-        ProductDAO pDAO = new ProductDAO();
-        ArrayList<Product> list = pDAO.getAllProducts("SalesManagement");
-        for(Product p : list){
-            if(p.getProductName().toLowerCase().equals(name.toLowerCase())){
-                request.setAttribute("error", "Product existed!");
-                request.getRequestDispatcher("addProduct.jsp").forward(request, response);
-                break;
-            }
-        }
-        BigDecimal price = BigDecimal.ZERO;
-        try{
-            price = new BigDecimal(request.getParameter("price"));
-        }
-        catch(NumberFormatException e){
-            request.setAttribute("errorNum", "Must be number!");
-            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
-        }
-        
-        String image = request.getParameter("image");
-        String unit = request.getParameter("unit");
-        pDAO.addProduct(name, image, "SalesManagement", price, unit);
-        response.sendRedirect("purchaseOrder.jsp");
+        processRequest(request, response);
     }
 
     /** 

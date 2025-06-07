@@ -21,7 +21,7 @@
             <h4 style="color: red">${requestScope.error}</h4>
             <label>Unit: <input type="text" name="unit" /></label><br/>
             <label>Price: <input type="number" step="0.01" name="price" /></label><br/>
-            <h4 style="color: red">${requestScope.error}</h4>
+            <h4 style="color: red">${requestScope.errorNum}</h4>
             <label>Image link:
                 <input type="text" name="image" />
             </label><br/>

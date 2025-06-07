@@ -44,7 +44,7 @@
 
         <c:if test="${not empty sessionScope.warehouseId}">
             <div class="top-bar">
-                <form action="addProduct.jsp">
+                <form action="purchaseOrder">
                     <button type="submit">ADD</button>
                 </form>
 

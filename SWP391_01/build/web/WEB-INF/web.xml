@@ -28,6 +28,10 @@
         <servlet-name>PurchaseOrderTemp</servlet-name>
         <servlet-class>controller.PurchaseOrderTemp</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A</servlet-name>
+        <servlet-class>controller.A</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/product</url-pattern>
@@ -55,5 +59,9 @@
     <servlet-mapping>
         <servlet-name>PurchaseOrderTemp</servlet-name>
         <url-pattern>/purchaseOrderTemp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A</servlet-name>
+        <url-pattern>/a</url-pattern>
     </servlet-mapping>
 </web-app>

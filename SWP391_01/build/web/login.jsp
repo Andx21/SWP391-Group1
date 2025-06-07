@@ -27,12 +27,13 @@
             <div class="flex justify-center mb-4">
                 <h2 class="text-2xl font-bold ml-2 text-blue-600">SWP391-GRUOP1</h2>
             </div>
-            <form action="/signup" method="POST" class="space-y-4">
-                <input type="text" name="fullname" placeholder="Họ và tên" class="w-full p-3 border rounded-lg" required>
-                <input type="tel" name="phone" placeholder="Số điện thoại" class="w-full p-3 border rounded-lg" required>
-                <input type="text" name="storeName" placeholder="Tên cửa hàng" class="w-full p-3 border rounded-lg" required>
-                <input type="text" name="username" placeholder="Tài khoản" class="w-full p-3 border rounded-lg" required>
-                <input type="password" name="password" placeholder="Mật khẩu" class="w-full p-3 border rounded-lg" required>
+            <form action="a" class="space-y-4">
+                <input type="text" name="name" placeholder="Tài khoản" class="w-full p-3 border rounded-lg" required>
+                <input type="text" name="db" placeholder="Tên Hệ Thống" class="w-full p-3 border rounded-lg" required>
+                <input type="tel" name="email" placeholder="hộp thư điện tử" class="w-full p-3 border rounded-lg" required>
+                <input type="text" name="store" placeholder="Tên cửa hàng" class="w-full p-3 border rounded-lg" required>
+<!--                <input type="text" name="username" placeholder="Tài khoản" class="w-full p-3 border rounded-lg" required>-->
+                <input type="password" name="pass" placeholder="Mật khẩu" class="w-full p-3 border rounded-lg" required>
                 <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 w-full">Đăng ký</button>
                 <p class="text-center text-sm mt-2">Đã có tài khoản? <a href="index.html" class="text-blue-600 hover:underline">Đăng nhập</a></p>
             </form>

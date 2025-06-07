@@ -48,8 +48,8 @@
                                             <td>${product.price}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Quantity:</strong></td>
-                                            <td>${product.quantity}</td>
+                                            <td><strong>Unit:</strong></td>
+                                            <td>${product.unit}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -90,7 +90,7 @@
 
         <div>
             <c:if test="${sessionScope.listPurchaseOrder.size() > 0}">
-                <form action="purchaseOrder" method="get">
+                <form action="purchaseOrder" method="post">
                     <table>
                         <tr>
                             <th>Name</th>
@@ -110,6 +110,10 @@
                                 <td><button type="button" onclick="doDeletePurchaseOrderTmp('${product.productId}')">Delete</button></td>                      
                             </tr>
                             <input type="hidden" name="productId"value="${product.productId}"/>
+                            <input type="hidden" name="quantity" value="${product.quantity}"/>
+                            <input type="hidden" name="purchasePrice" value="${product.purchasePrice}"/>
+                            <input type="hidden" name="sellingPrice" value="${product.sellingPrice}"/>
+                            <input type="hidden" name="supplierId" value="${product.supplierId}"/>
                         </c:forEach>
                     </table>
                     <button type="submit">Save</button>

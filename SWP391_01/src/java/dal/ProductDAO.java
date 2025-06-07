@@ -25,7 +25,7 @@ public class ProductDAO extends DBContext {
         ArrayList<Product> list = new ArrayList<>();
         try {
             connection = new DBContext().getConnection(dbName);
-            String sql = "select p.ProductName, p.ProductID, p.ProductName, p.Price, p.Unit, p.Image, i.Quantity\n"
+            String sql = "select p.ProductName, p.ProductID, p.Price, p.Unit, p.Image, i.Quantity\n"
                     + "from Product p\n"
                     + "join Inventory i on p.ProductID = i.ProductID\n"
                     + "where i.WarehouseID =" + warehouseId;
@@ -53,7 +53,7 @@ public class ProductDAO extends DBContext {
         ArrayList<Product> list = new ArrayList<>();
         try {
             connection = new DBContext().getConnection(dbName);
-            String sql = "select ProductName, ProductID, ProductName, Price, Unit, Image\n"
+            String sql = "select ProductName, ProductID, Price, Unit, Image\n"
                     + "from Product";
             Statement st = connection.createStatement();
             try (ResultSet rs = st.executeQuery(sql)) {
@@ -134,4 +134,42 @@ public class ProductDAO extends DBContext {
         }
     }
     
+    public Product getProductById(String dbName, int id, int warehouseId){
+        Product p = new Product();
+        try {
+            connection = new DBContext().getConnection(dbName);
+            String sql = "select p.ProductName, p.ProductID, p.Price, p.Unit, p.Image, i.Quantity\n"
+                    + "from Product p\n"
+                    + "join Inventory i on p.ProductID = i.ProductID\n"
+                    + "where i.WarehouseID =" + warehouseId +" and p.ProductID ="+ id;
+            Statement st = connection.createStatement();
+            try (ResultSet rs = st.executeQuery(sql)) {
+                if (rs.next()) {
+                    p.setProductId(rs.getInt("ProductID"));
+                    p.setProductName(rs.getString("ProductName"));
+                    p.setPrice(rs.getBigDecimal("Price"));
+                    p.setUnit(rs.getString("Unit"));
+                    p.setImage(rs.getString("Image"));
+                    p.setQuantity(rs.getInt("Quantity"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return p;
+    }
+    
+    public void updatePrice(int id, BigDecimal price, String dbName) {
+        String sql = "update Product set Price = ? where ProductID = ?";
+        try {
+            connection = new DBContext().getConnection(dbName);
+            Statement st = connection.createStatement();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(2, id);
+            ps.setBigDecimal(1, price);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

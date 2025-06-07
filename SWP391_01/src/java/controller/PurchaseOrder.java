@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.SupplierDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import model.Supplier;
-import model.PurchaseOrders;
 import dal.SupplierDAO;
-import dal.ProductDAO;
-import java.util.Map;
+import dal.PurchaseOrderDAO;
 import model.Product;
 
 /**
@@ -100,7 +96,37 @@ public class PurchaseOrder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
+        HttpSession session = request.getSession();
+        int warehouseId = (int) session.getAttribute("warehouseId");
+        String[] productIdArray = request.getParameterValues("productId");
+        String[] quantityArray = request.getParameterValues("quantity");
+        String[] purchasePriceArray = request.getParameterValues("purchasePrice");
+        String[] sellingPriceArray = request.getParameterValues("sellingPrice");
+        String[] supplierIdArray = request.getParameterValues("supplierId");
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (int i = 0; i < purchasePriceArray.length; i++) {
+            BigDecimal purchasePrice = new BigDecimal(purchasePriceArray[i]);
+            int quantity = Integer.parseInt(quantityArray[i]);
+            BigDecimal lineTotal = purchasePrice.multiply(BigDecimal.valueOf(quantity));
+            totalAmount = totalAmount.add(lineTotal);
+        }
+        PurchaseOrderDAO poDAO = new PurchaseOrderDAO();
+        int id = poDAO.addPurchaseOrder("SalesManagement", warehouseId, totalAmount);
+        for (int i = 0; i < productIdArray.length; i++) {
+            int productId = Integer.parseInt(productIdArray[i]);
+            int quantity = Integer.parseInt(quantityArray[i]);
+            BigDecimal purchasePrice = new BigDecimal(purchasePriceArray[i]);
+            BigDecimal sellingPrice = new BigDecimal(sellingPriceArray[i]);
+            int supplierId = Integer.parseInt(supplierIdArray[i]);
+            poDAO.addPurchaseOrderDetail(id, productId, quantity, purchasePrice, sellingPrice, "SalesManagement", supplierId);
+            ProductDAO pDAO = new ProductDAO();
+            Product p = pDAO.getProductById("SalesManagement", productId, warehouseId);
+            int newQuantity = quantity + p.getQuantity();
+            pDAO.updateQuantity(newQuantity, "SalesManagement", warehouseId, productId);
+            pDAO.updatePrice(productId, sellingPrice, "SalesManagement");
+        }
+        session.removeAttribute("listPurchaseOrder");
+        response.sendRedirect("purchaseOrder.jsp");
     }
 
     /**
